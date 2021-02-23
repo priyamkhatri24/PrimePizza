@@ -1,0 +1,46 @@
+.build_controls {
+  position: absolute;
+  background: linear-gradient(rgb(224, 79, 12), rgb(233, 139, 33));
+  width: 100%;
+  margin: 0px auto;
+  height: fit-content;
+  top: 470px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 0px;
+  border-radius: 100px;
+}
+h4 {
+  font-size: 25px;
+  margin: 10px auto 15px auto;
+  color: rgb(255, 243, 232);
+}
+h4 span {
+  font-size: 30px;
+}
+.order_btn {
+  height: 50px;
+  min-height: 50px;
+  font-size: 15px;
+  width: 120px;
+  background-color: rgb(184, 52, 4);
+  color: rgb(255, 243, 232);
+  font-weight: 500;
+  border-radius: 10px;
+  margin: 20px;
+  border: transparent;
+  cursor: pointer;
+}
+.order_btn:disabled {
+  background-color: rgb(92, 92, 92);
+  cursor: default;
+  color: rgb(189, 189, 189);
+}
+.order_btn:hover {
+  background-color: rgb(143, 38, 0);
+}
+.order_btn:disabled:hover {
+  background-color: rgb(66, 66, 66);
+  cursor: default;
+}

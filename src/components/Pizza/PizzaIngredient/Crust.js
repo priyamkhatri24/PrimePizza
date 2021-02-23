@@ -1,5 +1,9 @@
 import "../Pizza.css";
 import React from "react";
 
-const Crust = () => <section className="crust"></section>;
-export default Crust;
+const crust = (props) => {
+  const classes = props.wanted ? "crust hidden" : "crust";
+  return <section className={classes}></section>;
+};
+
+export default crust;

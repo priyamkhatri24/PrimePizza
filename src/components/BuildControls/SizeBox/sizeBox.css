@@ -1,0 +1,8 @@
+.top {
+  margin-bottom: 5px;
+}
+.spacing {
+  margin-bottom: 10px;
+  border: 2px solid rgb(158, 45, 0);
+  margin-top: -10px;
+}

@@ -2,9 +2,11 @@ import Aux from "../../hoc/Auxiliary";
 import "../Pizza.css";
 import React from "react";
 
-const Mushrooms = () => {
+const mushrooms = (props) => {
+  const classes = props.wanted ? "" : "hidden";
+
   return (
-    <Aux>
+    <div className={classes}>
       <section className="mushroom one">
         <div className="cap"></div>
         <div className="stem"></div>
@@ -164,7 +166,7 @@ const Mushrooms = () => {
         <div className="cap"></div>
         <div className="stem"></div>
       </section>
-    </Aux>
+    </div>
   );
 };
-export default Mushrooms;
+export default mushrooms;

@@ -2,9 +2,10 @@ import React from "react";
 import "../Pizza.css";
 import Aux from "../../hoc/Auxiliary";
 
-const Peppers = () => {
+const peppers = (props) => {
+  const classes = props.wanted ? "" : "hidden";
   return (
-    <Aux>
+    <div className={classes}>
       <section className="green-pepper one"></section>
       <section className="green-pepper two"></section>
       <section className="green-pepper three"></section>
@@ -26,8 +27,8 @@ const Peppers = () => {
       <section className="green-pepper nineteen"></section>
       <section className="green-pepper twenty"></section>
       <section className="green-pepper twenty-one"></section>
-    </Aux>
+    </div>
   );
 };
 
-export default Peppers;
+export default peppers;

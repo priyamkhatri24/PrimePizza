@@ -5,13 +5,12 @@
   /* overflow: hidden; */
   position: relative;
   text-align: center;
-  top: -150px;
-  transform: scale(0.4);
+  top: -155px;
+  /* transform: scale(0.42); */
 
   /* animation: rotation 80s infinite linear; */
 }
-.scale {
-  transform: scale(0.4);
+.scale_small {
   animation: rotation 75s infinite linear;
 }
 .crust {
