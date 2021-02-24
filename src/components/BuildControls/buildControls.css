@@ -31,6 +31,7 @@ h4 span {
   margin: 20px;
   border: transparent;
   cursor: pointer;
+  outline: none;
 }
 .order_btn:disabled {
   background-color: rgb(92, 92, 92);

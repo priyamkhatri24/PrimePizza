@@ -12,7 +12,11 @@ const buildControls = (props) => {
       </h4>
       <SizeBox size={props.pizzaSize} checked={props.sizeChecked} />
       <IngredientBox checked={props.ingChecked} />
-      <button className="order_btn" disabled={!props.disable}>
+      <button
+        onClick={props.orderNow}
+        className="order_btn"
+        disabled={!props.disable}
+      >
         ORDER NOW
       </button>
     </div>

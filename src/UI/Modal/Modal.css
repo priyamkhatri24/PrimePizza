@@ -1,6 +1,6 @@
 .modal {
   width: 40%;
-  height: 45vh;
+  height: 280px;
   z-index: 500;
   position: fixed;
   display: flex;
@@ -10,6 +10,13 @@
   border: 1px solid rgba(0, 0, 0, 0.5);
   background-color: #fff;
   box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  display: flex;
+  transition-duration: 0.3s;
+}
+.modal_not_shown {
+  transform: translateY(-100vh);
+  opacity: 0;
 }
 
 @media screen and (max-width: 500px) {

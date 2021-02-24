@@ -1,0 +1,17 @@
+.btn {
+  border: transparent;
+  outline: none;
+  background: transparent;
+  font-weight: 800;
+  margin: 15px 20px 15px 0px;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.cancel_btn {
+  color: brown;
+}
+
+.cont_btn {
+  color: rgb(0, 104, 0);
+}

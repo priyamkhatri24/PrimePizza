@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import BuildControls from "../../components/BuildControls/BuildControls";
 import Aux from "../../components/hoc/Auxiliary";
 import Pizza from "../../components/Pizza/Pizza";
+import Backdrop from "../../UI/Backdrop/Backdrop";
 import Modal from "../../UI/Modal/Modal";
+import ModalContent from "../../UI/Modal/ModalContent/ModalContent";
 
 const INGREDIENT_PRICE = {
   mushrooms: 60,
@@ -28,6 +30,7 @@ class PizzaBuilder extends Component {
     basePrice: 0,
     totalPrice: 0,
     purchasable: false,
+    ordered: false,
   };
 
   ingredientSelectHandler = (e) => {
@@ -75,12 +78,28 @@ class PizzaBuilder extends Component {
     });
   };
 
-  componentDidUpdate() {}
+  orderNowBtnHandler = () => {
+    this.setState({ ordered: true });
+  };
+  orderCancelHandler = () => {
+    this.setState({ ordered: false });
+  };
+  orderContinueHandler = () => {
+    alert("continue!");
+  };
 
   render() {
     return (
       <Aux>
-        <Modal />
+        <Modal cancel={this.orderCancelHandler} ordered={this.state.ordered}>
+          <ModalContent
+            ordered={this.state.ingredients}
+            size={this.state.config.size}
+            price={this.state.totalPrice}
+            canceledOrder={this.orderCancelHandler}
+            purchasedOrder={this.orderContinueHandler}
+          />
+        </Modal>
         <Pizza
           size={this.state.config.size}
           ingredients={this.state.ingredients}
@@ -91,6 +110,7 @@ class PizzaBuilder extends Component {
           ingChecked={this.ingredientSelectHandler}
           sizeChecked={this.sizeSelectHandler}
           disable={this.state.purchasable}
+          orderNow={this.orderNowBtnHandler}
         />
       </Aux>
     );
