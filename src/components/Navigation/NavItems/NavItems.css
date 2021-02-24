@@ -1,0 +1,35 @@
+.nav_items {
+  list-style: none;
+  display: flex;
+  margin: auto;
+  justify-content: space-around;
+}
+
+.nav_items .nav_item {
+  margin: auto 20px;
+  /* color: white; */
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  padding: 5px 0px;
+  transition-duration: 0.3s;
+}
+.nav_items li:hover {
+  border-bottom: 1px solid white;
+}
+.nav_items .active {
+  border-bottom: 1px solid white;
+}
+
+@media screen and (max-width: 500px) {
+  .nav_items {
+    display: grid;
+    margin: auto;
+    padding: 0px;
+    text-align: left;
+    border: transparent;
+  }
+  .nav_items .nav_item {
+    margin: 20px 0px;
+  }
+}

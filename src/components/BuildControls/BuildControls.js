@@ -1,7 +1,6 @@
 import React from "react";
 import IngredientBox from "./IngredientBox/IngredientBox";
 import "./buildControls.css";
-import "./IngredientBox/ingredientBox.css";
 import SizeBox from "./SizeBox/SizeBox";
 
 const buildControls = (props) => {

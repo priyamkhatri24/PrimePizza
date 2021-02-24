@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { Component } from "react";
-import Layout from "../components/Layout/Layout";
-import Pizza from "../components/Pizza/Pizza";
+import Layout from "./Layout/Layout";
 import PizzaBuilder from "./PizzaBuilder/PizzaBuilder";
 
 class App extends Component {

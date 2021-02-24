@@ -1,0 +1,30 @@
+.sidebar {
+  width: 40%;
+  max-width: 70%;
+  height: 100%;
+  z-index: 200;
+  background: linear-gradient(rgb(233, 139, 33), rgb(199, 63, 0));
+
+  position: fixed;
+  text-align: left;
+  padding: 20px;
+  top: 0px;
+  left: 0px;
+  color: white;
+  transition: transform 0.3s ease-out;
+  box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 0.7);
+}
+.open {
+  transform: translateX(0%);
+}
+.close {
+  transform: translateX(-100%);
+
+  opacity: 0;
+}
+
+@media screen and (min-width: 500px) {
+  .sidebar {
+    display: none;
+  }
+}

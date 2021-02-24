@@ -5,10 +5,13 @@
   /* overflow: hidden; */
   position: relative;
   text-align: center;
-  top: -155px;
-  /* transform: scale(0.42); */
-
-  /* animation: rotation 80s infinite linear; */
+  top: -175px;
+  transform: scale(0.42);
+}
+@media screen and (max-width: 450px) {
+  #pizza {
+    transform: scale(0.35);
+  }
 }
 .scale_small {
   animation: rotation 75s infinite linear;

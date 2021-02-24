@@ -1,0 +1,25 @@
+.nav_menu {
+  width: 100%;
+  height: 70px;
+  border-radius: 0px 0px 80px 80px;
+  background: linear-gradient(rgb(233, 139, 33), rgb(199, 63, 0));
+  display: flex;
+  color: rgb(255, 255, 255);
+}
+@media screen and (max-width: 500px) {
+  .nav_menu {
+    border-radius: 0px;
+  }
+  .nav_menu .nav_items {
+    display: none;
+  }
+}
+ion-icon {
+  font-size: 45px;
+  margin: auto 30px auto 10px;
+}
+@media screen and (min-width: 500px) {
+  ion-icon {
+    display: none;
+  }
+}

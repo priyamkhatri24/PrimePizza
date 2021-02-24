@@ -80,6 +80,7 @@ class PizzaBuilder extends Component {
 
   orderNowBtnHandler = () => {
     this.setState({ ordered: true });
+    window.scroll({ top: 0, behavior: "smooth" });
   };
   orderCancelHandler = () => {
     this.setState({ ordered: false });

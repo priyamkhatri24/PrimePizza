@@ -6,3 +6,15 @@
   border: 2px solid rgb(158, 45, 0);
   margin-top: -10px;
 }
+
+@media screen and (max-width: 550px) {
+  .spacing {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    height: 160px;
+  }
+  .top {
+    margin: 10px;
+  }
+}

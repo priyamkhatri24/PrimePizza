@@ -86,3 +86,8 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+@media screen and (max-width: 900px) {
+  .ing_control_box {
+    width: 50%;
+  }
+}
