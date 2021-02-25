@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import BuildControls from "../../components/BuildControls/BuildControls";
 import Aux from "../../components/hoc/Auxiliary";
 import Pizza from "../../components/Pizza/Pizza";
-import Backdrop from "../../UI/Backdrop/Backdrop";
 import Modal from "../../UI/Modal/Modal";
+import axios from "axios";
 import ModalContent from "../../UI/Modal/ModalContent/ModalContent";
+import Spinner from "../../UI/Spinner/Spinner";
 
 const INGREDIENT_PRICE = {
   mushrooms: 60,
@@ -31,6 +32,8 @@ class PizzaBuilder extends Component {
     totalPrice: 0,
     purchasable: false,
     ordered: false,
+    continued: false,
+    error: null,
   };
 
   ingredientSelectHandler = (e) => {
@@ -86,20 +89,62 @@ class PizzaBuilder extends Component {
     this.setState({ ordered: false });
   };
   orderContinueHandler = () => {
-    alert("continue!");
+    this.setState({ continued: true });
+    const order = {
+      ingredients: this.state.ingredients,
+      size: this.state.config.size,
+      price: this.state.totalPrice,
+      customer: {
+        name: "Priyam",
+        email: "priyamkhatri24@gmail.com",
+        address: {
+          city: "Noida",
+          street: "Sector 55",
+          House: "E 107",
+        },
+      },
+    };
+    axios
+      .post(
+        "https://prime-pizza-ddef6-default-rtdb.firebaseio.com/orders.json",
+        order
+      )
+      .then((response) => {
+        this.setState({ ordered: false, continued: false });
+      })
+      .catch((err) => {
+        this.setState({ error: err, continued: false });
+      });
   };
 
   render() {
+    let modalContent;
+
+    if (this.state.continued) {
+      modalContent = <Spinner />;
+    }
+    if (!this.state.continued) {
+      modalContent = (
+        <ModalContent
+          ordered={this.state.ingredients}
+          size={this.state.config.size}
+          price={this.state.totalPrice}
+          canceledOrder={this.orderCancelHandler}
+          purchasedOrder={this.orderContinueHandler}
+        />
+      );
+    }
+    if (this.state.error) {
+      modalContent = (
+        <p style={{ margin: "auto" }}>
+          {this.state.error.message}. Please reload the application.
+        </p>
+      );
+    }
     return (
       <Aux>
         <Modal cancel={this.orderCancelHandler} ordered={this.state.ordered}>
-          <ModalContent
-            ordered={this.state.ingredients}
-            size={this.state.config.size}
-            price={this.state.totalPrice}
-            canceledOrder={this.orderCancelHandler}
-            purchasedOrder={this.orderContinueHandler}
-          />
+          {modalContent}
         </Modal>
         <Pizza
           size={this.state.config.size}
