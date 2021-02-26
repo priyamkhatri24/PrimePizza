@@ -13,7 +13,7 @@
     transform: scale(0.35);
   }
 }
-.scale_small {
+.rotate {
   animation: rotation 75s infinite linear;
 }
 .crust {

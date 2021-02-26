@@ -1,0 +1,31 @@
+.checkout {
+  overflow-y: hidden;
+  height: fit-content;
+}
+.checkout button {
+  top: -350px;
+  position: relative;
+  background-color: transparent;
+  outline: none;
+  margin: 20px;
+  padding: 10px;
+  border: transparent;
+  cursor: pointer;
+  font-weight: 800;
+}
+.checkout button.green {
+  color: rgb(7, 71, 7);
+}
+.checkout button.red {
+  color: rgb(116, 6, 6);
+}
+.checkout h5 {
+  color: black;
+  top: -350px;
+  position: relative;
+}
+@media screen and (max-width: 380px) {
+  .checkout {
+    height: fit-content;
+  }
+}

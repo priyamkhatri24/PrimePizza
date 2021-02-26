@@ -9,7 +9,7 @@ import Pepperoni from "./PizzaIngredient/Pepperoni";
 const Pizza = (props) => {
   return (
     <div id="pizza">
-      <div className="scale_small">
+      <div className={props.rotate}>
         <Peppers wanted={props.ingredients.peppers} />
         <Mushrooms wanted={props.ingredients.mushrooms} />
         <Cheese wanted={props.ingredients.cheese} />

@@ -90,31 +90,7 @@ class PizzaBuilder extends Component {
   };
   orderContinueHandler = () => {
     this.setState({ continued: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      size: this.state.config.size,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Priyam",
-        email: "priyamkhatri24@gmail.com",
-        address: {
-          city: "Noida",
-          street: "Sector 55",
-          House: "E 107",
-        },
-      },
-    };
-    axios
-      .post(
-        "https://prime-pizza-ddef6-default-rtdb.firebaseio.com/orders.json",
-        order
-      )
-      .then((response) => {
-        this.setState({ ordered: false, continued: false });
-      })
-      .catch((err) => {
-        this.setState({ error: err, continued: false });
-      });
+    this.props.history.push("/checkout");
   };
 
   render() {
@@ -147,6 +123,7 @@ class PizzaBuilder extends Component {
           {modalContent}
         </Modal>
         <Pizza
+          rotate="rotate"
           size={this.state.config.size}
           ingredients={this.state.ingredients}
         />

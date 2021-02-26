@@ -10,12 +10,10 @@ class Layout extends Component {
   };
   removeSidebarHandler = () => {
     this.setState({ showSidebar: false });
-    console.log("hide");
   };
 
   showSidebarHandler = () => {
     this.setState({ showSidebar: true });
-    console.log("show");
   };
 
   render() {
