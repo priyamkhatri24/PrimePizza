@@ -90,7 +90,16 @@ class PizzaBuilder extends Component {
   };
   orderContinueHandler = () => {
     this.setState({ continued: true });
-    this.props.history.push("/checkout");
+    const queryParam = [];
+    for (let [key, val] of Object.entries(this.state.ingredients)) {
+      queryParam.push(encodeURIComponent(key) + "=" + encodeURIComponent(val));
+    }
+    queryParam.push(`price=${this.state.totalPrice}`);
+    queryParam.push(`size=${this.state.config.size}`);
+    this.props.history.push({
+      pathname: "/checkout",
+      search: queryParam.join("&"),
+    });
   };
 
   render() {

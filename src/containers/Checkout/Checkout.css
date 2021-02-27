@@ -23,9 +23,6 @@
   color: black;
   top: -350px;
   position: relative;
-}
-@media screen and (max-width: 380px) {
-  .checkout {
-    height: fit-content;
-  }
+  font-size: 25px;
+  margin: 5px auto;
 }

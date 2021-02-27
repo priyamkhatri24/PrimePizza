@@ -1,6 +1,7 @@
 import React from "react";
 import Aux from "../../hoc/Auxiliary";
 import "./NavItems.css";
+import { NavLink } from "react-router-dom";
 
 const navItems = (props) => {
   return (
@@ -9,8 +10,14 @@ const navItems = (props) => {
         My<span style={{ fontWeight: 300 }}>Pizza</span>
       </h4>
       <ul className="nav_items">
-        <li className="nav_item active">MY PIZZA</li>
-        <li className="nav_item">ORDERS</li>
+        <li className="nav_item">
+          <NavLink exact to="/">
+            MY PIZZA
+          </NavLink>
+        </li>
+        <li className="nav_item">
+          <NavLink to="/orders">MY ORDERS</NavLink>
+        </li>
       </ul>
     </Aux>
   );

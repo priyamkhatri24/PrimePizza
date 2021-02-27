@@ -1,0 +1,16 @@
+.order {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: 5px auto;
+  padding: 10px;
+  border: 1px solid black;
+  box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 0.7);
+}
+.ingredients {
+  margin: auto 10px;
+  text-align: left;
+}
+.price {
+  margin: auto 10px;
+}
