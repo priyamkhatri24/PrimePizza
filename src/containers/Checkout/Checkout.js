@@ -70,6 +70,7 @@ class Checkout extends Component {
       .catch((err) => {
         this.setState({ error: err });
       });
+    window.scroll({ top: 0, behavior: "smooth" });
   };
 
   cancelFormHandler = () => {
