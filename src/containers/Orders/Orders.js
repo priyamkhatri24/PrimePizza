@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { Component } from "react";
 import Order from "../../components/Order/Order";
+import Spinner from "../../UI/Spinner/Spinner";
 import "./Orders.css";
 
 class Orders extends Component {
   state = {
     orders: null,
+    error: null,
   };
   componentDidMount() {
     let orders = [];
@@ -19,11 +21,14 @@ class Orders extends Component {
         this.setState({ orders: orders });
       })
       .catch((err) => {
-        console.log(err);
+        this.setState({ error: err.message });
       });
   }
   render() {
-    let orders = null;
+    let orders = <Spinner />;
+    if (this.state.error) {
+      orders = <h2>No orders to display</h2>;
+    }
     if (this.state.orders) {
       orders = this.state.orders.map((ele) => {
         return (
@@ -32,6 +37,7 @@ class Orders extends Component {
             ingredients={ele.ingredients}
             size={ele.size}
             price={ele.price}
+            customerName={ele.customer.name}
           />
         );
       });

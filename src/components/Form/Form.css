@@ -6,11 +6,13 @@
   padding: 10px;
   width: 100%;
   align-items: center;
+  height: fit-content;
 }
 .form_container input {
   width: 80%;
   height: 30px;
   margin: 5px auto;
+  outline: rgb(77, 77, 77);
 }
 .form_container .place_order {
   position: relative;
@@ -28,15 +30,22 @@
   cursor: pointer;
   outline: none;
 }
+.form_container .place_order:disabled {
+  background-color: gray;
+  cursor: default;
+}
 .form_container .place_order:hover {
   background-color: rgb(143, 38, 0);
 }
-.btns {
-  display: flex;
-  flex-direction: column;
+.place_order:disabled:hover {
+  background-color: rgb(94, 94, 94);
 }
-.cancel {
+
+button.cancel {
+  margin: 0px;
+  padding: 0px;
   position: relative;
-  top: -10px;
-  color: red;
+  top: 0px;
+  color: rgb(119, 119, 119);
+  font-weight: 400;
 }

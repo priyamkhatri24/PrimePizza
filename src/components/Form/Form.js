@@ -1,21 +1,73 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Form.css";
+import Input from "../../UI/Input/Input";
 
-const form = (props) => {
-  return (
-    <div className="form_container">
-      <h2>Please fill your contact details</h2>
-      <form>
-        <input type="text" placeholder="Your name"></input>
-        <input type="email" placeholder="Your email"></input>
-        <input type="text" placeholder="Adress"></input>
-        <input type="text" placeholder="contact"></input>
-        <button className="place_order" onClick={props.clicked}>
-          Place Order
+class Form extends Component {
+  state = {
+    name: {
+      placeholder: "Your name",
+      type: "text",
+      name: "name",
+      value: "",
+    },
+    email: {
+      placeholder: "Your email",
+      type: "text",
+      name: "email",
+      value: "",
+    },
+    address: {
+      placeholder: "Your Address",
+      type: "text",
+      name: "address",
+      value: "",
+    },
+    contact: {
+      placeholder: "Your contact",
+      type: "text",
+      name: "contact",
+      value: "",
+    },
+  };
+
+  validationClassesHandler = () => {};
+
+  render() {
+    const formArray = [];
+    for (let [_, val] of Object.entries(this.state)) {
+      formArray.push(val);
+    }
+    const form = formArray.map((inpt) => {
+      return (
+        <Input
+          changed={this.props.changed}
+          placeholder={inpt.placeholder}
+          name={inpt.name}
+          type={inpt.type}
+          key={inpt.name}
+          value={inpt.value}
+        />
+      );
+    });
+    return (
+      <div className="form_container">
+        <h2>Please fill your contact details</h2>
+        <form>
+          {form}
+          <button
+            disabled={!this.props.isValid}
+            className="place_order"
+            onClick={this.props.clicked}
+          >
+            Place Order
+          </button>
+        </form>
+        <button className="cancel" onClick={this.props.cancelOrder}>
+          CANCEL
         </button>
-      </form>
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
-export default form;
+export default Form;

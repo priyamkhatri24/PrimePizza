@@ -11,9 +11,17 @@ class Checkout extends Component {
     ingredients: null,
     price: 0,
     size: "Regular",
+    customer: {
+      name: "",
+      email: "",
+      address: "",
+      contact: "",
+    },
     continued: false,
     ordered: false,
     error: null,
+    inputEl: null,
+    isValid: false,
   };
 
   componentDidMount() {
@@ -48,15 +56,7 @@ class Checkout extends Component {
       ingredients: this.state.ingredients,
       size: this.state.size,
       price: this.state.price,
-      customer: {
-        name: "Priyam",
-        email: "priyamkhatri24@gmail.com",
-        address: {
-          city: "Noida",
-          street: "Sector 55",
-          House: "E 107",
-        },
-      },
+      customer: this.state.customer,
     };
     axios
       .post(
@@ -73,7 +73,26 @@ class Checkout extends Component {
   };
 
   cancelFormHandler = () => {
-    this.setState({ continued: false });
+    const customer = {
+      name: "",
+      email: "",
+      address: "",
+      contact: "",
+    };
+    this.setState({ continued: false, isValid: false, customer: customer });
+  };
+
+  contactDataHandler = (e) => {
+    const customer = { ...this.state.customer };
+    customer[e.target.name] = e.target.value;
+    this.setState({ customer: customer });
+    const isValid =
+      customer.name.trim().length > 0 &&
+      customer.email.trim().length > 0 &&
+      customer.address.trim().length > 0 &&
+      customer.contact.trim().length > 0;
+    console.log(isValid);
+    this.setState({ isValid: isValid });
   };
 
   render() {
@@ -84,7 +103,14 @@ class Checkout extends Component {
       );
     }
     if (this.state.continued) {
-      modalForm = <Form clicked={this.placeOrderHandler} />;
+      modalForm = (
+        <Form
+          isValid={this.state.isValid}
+          cancelOrder={this.cancelFormHandler}
+          clicked={this.placeOrderHandler}
+          changed={this.contactDataHandler}
+        />
+      );
     }
     if (this.state.ordered) {
       modalForm = <Spinner />;
@@ -98,12 +124,10 @@ class Checkout extends Component {
     }
     return (
       <div className="checkout">
-        <Modal cancel={this.cancelFormHandler} ordered={this.state.continued}>
-          {modalForm}
-        </Modal>
+        <Modal ordered={this.state.continued}>{modalForm}</Modal>
         <h1>Hope You like the Pizza!</h1>
         {pizza}
-        <h5>Total Price: {this.state.price.toFixed(2)}</h5>
+        <h5>Total Price: {this.state.price}</h5>
         <button onClick={this.checkoutCancelHandler} className="green">
           CANCEL
         </button>

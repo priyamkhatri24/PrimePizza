@@ -14,6 +14,7 @@ const order = (props) => {
           <strong>{props.size} Pizza with</strong>
         </p>
         <p>{ingredientsArray.join(", ")}</p>
+        <p>Customer: {props.customerName}</p>
       </div>
       <div className="price">
         <p>Total price: {props.price}</p>
