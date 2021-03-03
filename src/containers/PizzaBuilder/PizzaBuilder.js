@@ -6,100 +6,40 @@ import Modal from "../../UI/Modal/Modal";
 import axios from "axios";
 import ModalContent from "../../UI/Modal/ModalContent/ModalContent";
 import Spinner from "../../UI/Spinner/Spinner";
-
-const INGREDIENT_PRICE = {
-  mushrooms: 60,
-  pepperoni: 120,
-  peppers: 40,
-  cheese: 50,
-  crust: 20,
-};
+import { connect } from "react-redux";
 
 class PizzaBuilder extends Component {
   state = {
-    ingredients: {
-      mushrooms: false,
-      pepperoni: false,
-      peppers: false,
-      cheese: false,
-      crust: false,
-    },
-    config: {
-      size: "Regular",
-      priceMultiplier: 1,
-    },
-    basePrice: 0,
-    totalPrice: 0,
     purchasable: false,
     ordered: false,
     continued: false,
     error: null,
   };
 
-  ingredientSelectHandler = (e) => {
-    const label = e.target.getAttribute("label");
-    const updatedIngredients = { ...this.state.ingredients };
-    let newPrice;
-    let { basePrice } = this.state;
-    if (e.target.checked) {
-      newPrice = basePrice + INGREDIENT_PRICE[label];
-    }
-    if (!e.target.checked) {
-      newPrice = basePrice - INGREDIENT_PRICE[label];
-    }
-    updatedIngredients[label] = e.target.checked;
-    this.setState({
-      ingredients: updatedIngredients,
-      basePrice: newPrice,
-      totalPrice: newPrice * this.state.config.priceMultiplier,
-    });
+  purchasableHandler = () => {
     const ingArr = [];
-    for (let [_, val] of Object.entries(updatedIngredients)) {
+    for (let [_, val] of Object.entries(this.props.ingredients)) {
       ingArr.push(val);
     }
     const purchasableArr = ingArr.filter((ele) => ele);
-    if (purchasableArr.length) {
-      this.setState({ purchasable: true });
-    } else {
-      this.setState({ purchasable: false });
-    }
+    return purchasableArr.length !== 0;
   };
 
-  sizeSelectHandler = (e) => {
-    const updatedSize = { ...this.state.config };
-    const size = e.target.getAttribute("name");
-    updatedSize["size"] = size;
-    let { basePrice } = this.state;
-    let priceMultiplier;
-    if (size === "Regular") priceMultiplier = 1;
-    if (size === "Medium") priceMultiplier = 1.5;
-    if (size === "Large") priceMultiplier = 2.5;
-    updatedSize["priceMultiplier"] = priceMultiplier;
-    this.setState({
-      config: updatedSize,
-      totalPrice: basePrice * priceMultiplier,
-    });
-  };
+  sizeSelectHandler = (e) => {};
 
   orderNowBtnHandler = () => {
     this.setState({ ordered: true });
     window.scroll({ top: 0, behavior: "smooth" });
   };
+
   orderCancelHandler = () => {
     this.setState({ ordered: false });
   };
+
   orderContinueHandler = () => {
     this.setState({ continued: true });
-    const queryParam = [];
-    for (let [key, val] of Object.entries(this.state.ingredients)) {
-      queryParam.push(encodeURIComponent(key) + "=" + encodeURIComponent(val));
-    }
-    queryParam.push(`price=${this.state.totalPrice}`);
-    queryParam.push(`size=${this.state.config.size}`);
-    this.props.history.push({
-      pathname: "/checkout",
-      search: queryParam.join("&"),
-    });
+
+    this.props.history.push("/checkout");
   };
 
   render() {
@@ -111,9 +51,9 @@ class PizzaBuilder extends Component {
     if (!this.state.continued) {
       modalContent = (
         <ModalContent
-          ordered={this.state.ingredients}
-          size={this.state.config.size}
-          price={this.state.totalPrice}
+          ordered={this.props.ingredients}
+          size={this.props.config.size}
+          price={this.props.totalPrice}
           canceledOrder={this.orderCancelHandler}
           purchasedOrder={this.orderContinueHandler}
         />
@@ -133,15 +73,15 @@ class PizzaBuilder extends Component {
         </Modal>
         <Pizza
           rotate="rotate"
-          size={this.state.config.size}
-          ingredients={this.state.ingredients}
+          size={this.props.config.size}
+          ingredients={this.props.ingredients}
         />
         <BuildControls
-          pizzaSize={this.state.config.size}
-          totPrice={this.state.totalPrice}
-          ingChecked={this.ingredientSelectHandler}
-          sizeChecked={this.sizeSelectHandler}
-          disable={this.state.purchasable}
+          pizzaSize={this.props.config.size}
+          totPrice={this.props.totalPrice}
+          ingChecked={this.props.ingredientSelectHandler}
+          sizeChecked={this.props.sizeSelectHandler}
+          disable={this.purchasableHandler()}
           orderNow={this.orderNowBtnHandler}
         />
       </Aux>
@@ -149,4 +89,20 @@ class PizzaBuilder extends Component {
   }
 }
 
-export default PizzaBuilder;
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    config: state.config,
+    basePrice: state.basePrice,
+    totalPrice: state.totalPrice,
+  };
+};
+
+const mapActionsToProps = (dispatch) => {
+  return {
+    ingredientSelectHandler: (e) => dispatch({ type: "SELECT", e: e }),
+    sizeSelectHandler: (e) => dispatch({ type: "SIZE_SELECT", e: e }),
+  };
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(PizzaBuilder);

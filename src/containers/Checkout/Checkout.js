@@ -5,12 +5,11 @@ import axios from "axios";
 import Modal from "../../UI/Modal/Modal";
 import Form from "../../components/Form/Form";
 import Spinner from "../../UI/Spinner/Spinner";
+import { connect } from "react-redux";
+import { findRenderedDOMComponentWithClass } from "react-dom/test-utils";
 
 class Checkout extends Component {
   state = {
-    ingredients: null,
-    price: 0,
-    size: "Regular",
     customer: {
       name: "",
       email: "",
@@ -24,25 +23,9 @@ class Checkout extends Component {
     isValid: false,
   };
 
-  componentDidMount() {
-    const isTrue = (string) => string === "true";
-    const query = new URLSearchParams(this.props.location.search);
-    const ingredients = {};
-    let totPrice, size;
-    for (let i of query.entries()) {
-      if (i[0] === "price") {
-        totPrice = +i[1];
-      } else if (i[0] === "size") {
-        size = i[1];
-      } else {
-        ingredients[i[0]] = isTrue(i[1]);
-      }
-    }
-    this.setState({ price: totPrice, ingredients: ingredients, size: size });
-  }
-
   checkoutCancelHandler = () => {
-    this.props.history.push("/");
+    this.props.history.replace("/");
+    this.props.checkoutCancelHandler();
   };
 
   continueHandler = () => {
@@ -53,9 +36,9 @@ class Checkout extends Component {
     e.preventDefault();
     this.setState({ ordered: true });
     const order = {
-      ingredients: this.state.ingredients,
-      size: this.state.size,
-      price: this.state.price,
+      ingredients: this.props.ingredients,
+      size: this.props.config.size,
+      price: this.props.totalPrice,
       customer: this.state.customer,
     };
     axios
@@ -63,9 +46,10 @@ class Checkout extends Component {
         "https://prime-pizza-ddef6-default-rtdb.firebaseio.com/orders.json",
         order
       )
-      .then((response) => {
+      .then((_) => {
         this.setState({ ordered: false, continued: false });
         this.props.history.replace("/");
+        this.props.orderCompletedHandler();
       })
       .catch((err) => {
         this.setState({ error: err });
@@ -92,15 +76,14 @@ class Checkout extends Component {
       customer.email.trim().length > 0 &&
       customer.address.trim().length > 0 &&
       customer.contact.trim().length > 0;
-    console.log(isValid);
     this.setState({ isValid: isValid });
   };
 
   render() {
     let pizza, modalForm;
-    if (this.state.ingredients) {
+    if (this.props.ingredients) {
       pizza = (
-        <Pizza ingredients={this.state.ingredients} size="Regular" rotate="" />
+        <Pizza ingredients={this.props.ingredients} size="Regular" rotate="" />
       );
     }
     if (this.state.continued) {
@@ -123,20 +106,38 @@ class Checkout extends Component {
         </p>
       );
     }
+
     return (
       <div className="checkout">
         <Modal ordered={this.state.continued}>{modalForm}</Modal>
         <h1>Hope You like the Pizza!</h1>
         {pizza}
-        <h5>Total Price: {this.state.price}</h5>
-        <button onClick={this.checkoutCancelHandler} className="green">
+        <h5>Total Price: {this.props.totalPrice}</h5>
+        <button onClick={this.checkoutCancelHandler} className="red">
           CANCEL
         </button>
-        <button onClick={this.continueHandler} className="red">
+        <button onClick={this.continueHandler} className="green">
           CONTINUE
         </button>
       </div>
     );
   }
 }
-export default Checkout;
+
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    config: state.config,
+    basePrice: state.basePrice,
+    totalPrice: state.totalPrice,
+  };
+};
+
+const mapActionsToProps = (dispatch) => {
+  return {
+    checkoutCancelHandler: () => dispatch({ type: "CANCEL_CHECKOUT" }),
+    orderCompletedHandler: () => dispatch({ type: "ORDER_COMPLETED" }),
+  };
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Checkout);
