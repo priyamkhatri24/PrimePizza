@@ -30,7 +30,7 @@ class Orders extends Component {
       orders = <h2>No orders to display</h2>;
     }
     if (this.state.orders) {
-      orders = this.state.orders.map((ele) => {
+      orders = this.state.orders.reverse().map((ele) => {
         return (
           <Order
             key={ele.id}
