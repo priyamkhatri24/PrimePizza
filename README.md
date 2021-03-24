@@ -1,6 +1,8 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
+The project is live at: <a href="https://primepizza.netlify.app/">https://primepizza.netlify.app</a>
 
 ## Available Scripts
 
